@@ -95,6 +95,7 @@ export function verifyToken(token: string): DecodedToken {
   try {
     return verify(token, JWT_SECRET) as DecodedToken;
   } catch (error) {
+    
     throw new Error("Invalid token");
   }
 }
@@ -153,7 +154,13 @@ export async function loginUser(req: Request): Promise<string> {
   // Find user by email
   const user = await prisma.user.findUnique({
     where: { email },
-  });
+    select: {
+      id: true,
+      // username: true,
+      email: true,
+      password: true, // Include password for verification
+    },
+  })
 
   // Check if user exists
   if (!user) {

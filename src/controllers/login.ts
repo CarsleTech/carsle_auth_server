@@ -6,6 +6,14 @@ type loginHandler = {
 }
 
 class AuthHandler implements loginHandler {
+handleGet = async (req: any, res: Response): Promise<void> => {
+        res.status(200).json({
+            success: true,
+            message: "login endpoint is available",
+            user: req.user || null
+        });
+    }
+
    handlePost = async (req: Request, res: Response): Promise<void> => {
         try {
             // Input validation
@@ -65,54 +73,50 @@ class AuthHandler implements loginHandler {
         }
 
         // Check for missing fields
-        if (!req.body.hasOwnProperty('username')) {
-            return "Username is required";
-        }
+        // if (!req.body.hasOwnProperty('username')) {
+        //     return "Username is required";
+        // }
 
         if (!req.body.hasOwnProperty('password')) {
             return "Password is required";
         }
 
         // Check for null/undefined values
-        if (username === null || username === undefined) {
-            return "Username cannot be null or undefined";
-        }
+        // if (username === null || username === undefined) {
+        //     return "Username cannot be null or undefined";
+        // }
 
         if (password === null || password === undefined) {
             return "Password cannot be null or undefined";
         }
 
         // Check for empty strings
-        if (typeof username === 'string' && username.trim() === '') {
-            return "Username cannot be empty";
-        }
+        // if (typeof username === 'string' && username.trim() === '') {
+        //     return "Username cannot be empty";
+        // }
 
         if (typeof password === 'string' && password.trim() === '') {
             return "Password cannot be empty";
         }
 
         // Check data types
-        if (typeof username !== 'string') {
-            return "Username must be a string";
-        }
+        // if (typeof username !== 'string') {
+        //     return "Username must be a string";
+        // }
 
         if (typeof password !== 'string') {
             return "Password must be a string";
         }
 
         // Check length constraints
-        if (username.length > 100) {
-            return "Username is too long (maximum 100 characters)";
-        }
+       
 
         if (password.length > 100) {
             return "Password is too long (maximum 100 characters)";
         }
 
         // Additional security checks
-        if (username.length < 3) {
-            return "Username must be at least 3 characters long";
-        }
+        
 
         if (password.length < 6) {
             return "Password must be at least 6 characters long";

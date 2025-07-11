@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carsle-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: carsle-auth
+  template:
+    metadata:
+      labels:
+        app: carsle-auth
+    spec:
+      containers:
+        - name: carsle-auth
+          image: carsle_auth_server:v1.0.0
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carsle-auth
+spec:
+  selector:
+    app: carsle-auth
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30080
